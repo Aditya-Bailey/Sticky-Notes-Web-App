@@ -1,0 +1,70 @@
+.board{
+    background-color: #b9def0;
+    height: 100%;
+    padding: 4px;
+    width: 30%;
+}
+.addComment{
+    background: green;
+    border-radius: 12px;
+}
+
+.addComment:hover{
+    background-color: rgb(72, 206, 72);
+    
+}
+    .commentContainer{
+        background: #eee;
+        border: 1px solid #ccc;
+        display: inline-block;
+        margin: 8px;
+        padding: 8px;
+        width: 200px;
+    }
+
+.edit{
+    background: rgb(34, 34, 230);
+    border-radius: 12px;
+}
+
+.edit:hover{
+    background-color: rgb(56, 55, 156);
+    color: white;
+}
+
+.remove{
+    background: rgb(224, 26, 26);
+    border-radius: 12px;
+}
+
+.remove:hover{
+    background-color: rgb(161, 42, 42);
+    color: white;
+}
+
+.save{
+    background: green;
+    border-radius: 12px;
+}
+
+.save:hover{
+    background-color: rgb(70, 236, 106);
+    color: white;
+}
+
+.text{
+    font-family:  'Times New Roman', Times, serif;
+    color: black;
+    background: rgb(230, 213, 236);
+    padding: 8px 10px;  
+}
+
+button{
+    margin: 4px 2px;
+    position: relative;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    padding: 10px 15px;
+}
