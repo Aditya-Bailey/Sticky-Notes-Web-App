@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Simple Demo</title>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script src="https://fb.me/react-0.14.3.js"></script>
+            <script src="https://fb.me/react-dom-0.14.3.js"></script>
+            <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            
+            <!-- <link href="style.css" rel="stylesheet" /> -->
+
+
+        </head>
+    <body>
+
+        <div id="container"></div>
+
+        <script type="text/babel">
+
+            var Comment = React.createClass({
+
+                getInitialState: function(){
+                    return {editing: false}
+                },
+
+                edit: function(){
+                    this.setState({editing: true});
+                },
+                
+                save: function(){
+                    this.props.updateCommentText(this.refs.newText.value, this.props.index) 
+                    this.setState({editing: false});
+                },
+
+                remove: function(){
+                    console.log('removing');
+                    this.props.deleteComment(this.props.index)
+                },
+                
+                renderNormal: function(){
+                    return(
+                        <div className="col-md-4 pt-3">
+                            <div className = "card bg-warning">
+                                <div className="card-body">
+                                    <div className="form-group">
+                                        <textarea rows="7" disabled className = "form-control bg-light" defaultValue={this.props.children}></textarea>
+                                    </div>
+                                    <div className="form-group">
+                                        <button onClick = {this.edit} className = "btn btn-info">Edit</button> <button onClick = {this.remove} className = "btn btn-danger">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                    
+                },
+
+                renderForm: function(){
+                    return(
+                        <div className="col-md-4 pt-3">
+                            <div className = "card">
+                                <div className="card-body">
+                                    <textarea ref = "newText" defaultValue= {this.props.children} className="form-control"></textarea>
+                                    <button onClick = {this.save} className = "btn btn-success form-control">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                                );
+
+                },
+
+                render: function (){
+                    if(this.state.editing){
+                        return this.renderForm();
+                    } 
+                    else{
+                        return this.renderNormal();
+                    }
+                }    
+        });
+            
+
+            var Board = React.createClass({
+
+                getInitialState: function(){
+                    return {
+                        comments: [
+                            'My name is Aditya',
+                            'I love music',
+                            'I play Guitar'
+                        ]
+                    }
+                },
+                
+                add: function (text) {
+                    var arr = this.state.comments;
+                    arr.push(text);
+                    this.setState({comments: arr})
+
+                },
+
+                removeComment: function (i) {
+                    var arr = this.state.comments;
+                    arr.splice(i, 1);
+                    this.setState({comments: arr})
+                    
+                },
+
+                updateComment: function (newText, i) {
+                  var arr = this.state.comments;
+                  console.log(newText);
+                  arr[i] =newText;  
+                  console.log(arr);
+                  this.setState({comments: arr})
+                },
+
+                eachComment: function (text, i) {
+                                    return (<Comment key = {i} index = {i} updateCommentText = {this.updateComment} deleteComment = {this.removeComment}>
+                                        {text}
+                                        </Comment>)
+                                },
+
+                render: function(){
+                    return(
+                        <div className="container pt-5">
+                            <button onClick={this.add.bind(null, 'default text')} className="btn btn-success">+ Add</button>
+                            <div className = "row">
+                            {
+                                this.state.comments.map(this.eachComment)
+                            }
+                            </div>
+                        </div>
+                    );
+
+                }
+
+            });
+        
+            ReactDOM.render(
+                <Board />
+            , document.getElementById('container'));
+        </script>
+    
+    </body>
+</html>
